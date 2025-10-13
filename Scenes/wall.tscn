@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dbfm8f6n1crna"]
+
+[ext_resource type="Texture2D" uid="uid://cd75qcnxa7lqf" path="res://icon.svg" id="1_d155t"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yjehn"]
+size = Vector2(126, 128)
+
+[node name="Wall" type="Area2D"]
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_yjehn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_d155t")
