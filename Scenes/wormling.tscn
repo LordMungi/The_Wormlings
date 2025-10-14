@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2t1p7"]
 size = Vector2(126, 127)
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="Wormling" type="CharacterBody2D"]
 scale = Vector2(0.5, 0.5)
 collision_layer = 2
 input_pickable = true
@@ -32,6 +32,32 @@ offset_left = -62.0
 offset_top = -114.0
 offset_right = 62.0
 offset_bottom = -90.0
+
+[node name="Accesories" type="Node2D" parent="."]
+
+[node name="Sunglasses" type="Sprite2D" parent="Accesories"]
+modulate = Color(0.169245, 0.169245, 0.169245, 1)
+position = Vector2(0, -6)
+scale = Vector2(1.1875, 0.320946)
+texture = ExtResource("1_ogrfr")
+
+[node name="Hat" type="Sprite2D" parent="Accesories"]
+modulate = Color(0.169245, 0.169245, 0.169245, 1)
+position = Vector2(-2, -68)
+scale = Vector2(1.34375, 0.46875)
+texture = ExtResource("1_ogrfr")
+
+[node name="Moustache" type="Sprite2D" parent="Accesories"]
+modulate = Color(0.169245, 0.169245, 0.169245, 1)
+position = Vector2(0, 26)
+scale = Vector2(0.578125, 0.144848)
+texture = ExtResource("1_ogrfr")
+
+[node name="Bowtie" type="Sprite2D" parent="Accesories"]
+modulate = Color(0.169245, 0.169245, 0.169245, 1)
+position = Vector2(0, 56)
+scale = Vector2(0.84375, 0.15625)
+texture = ExtResource("1_ogrfr")
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
