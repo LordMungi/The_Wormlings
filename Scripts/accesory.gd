@@ -2,6 +2,7 @@ extends Area2D
 
 class_name Accesory
 
+@export var price: int
 var type: AccsTypes.t
 var isMouseColliding: bool
 var isGrabbed: bool
@@ -9,7 +10,8 @@ var grabOffset: Vector2
 var defaultPos: Vector2
 
 func _ready() -> void:
-	$Label.text = name
+	$Name.text = name
+	$Price.text = str(price)
 	isMouseColliding = false
 	isGrabbed = false
 	grabOffset = Vector2(0, 0)

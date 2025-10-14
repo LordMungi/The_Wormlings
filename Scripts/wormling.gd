@@ -47,7 +47,6 @@ func _physics_process(delta):
 	
 	match state:
 		WormState.Movement.MOVING:
-			print(str($Timer.time_left) + "  " + str(velocity))
 			if $Timer.time_left == 0:
 				changeDirection()
 			

@@ -34,7 +34,7 @@ offset_left = 103.0
 offset_top = 556.0
 offset_right = 391.0
 offset_bottom = 593.0
-text = "create instance"
+text = "create instance (40)"
 
 [node name="Feedlot" parent="." instance=ExtResource("3_wrm1d")]
 position = Vector2(140, 151)
@@ -76,6 +76,7 @@ offset_bottom = 587.0
 
 [node name="Sunglasses" parent="Accesories" instance=ExtResource("6_1l0tm")]
 position = Vector2(449, 570)
+price = 10
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Accesories/Sunglasses"]
@@ -84,7 +85,8 @@ scale = Vector2(0.34375, 0.125)
 texture = ExtResource("7_v158k")
 
 [node name="Hat" parent="Accesories" instance=ExtResource("6_1l0tm")]
-position = Vector2(742, 570)
+position = Vector2(548, 570)
+price = 35
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Accesories/Hat"]
@@ -94,6 +96,7 @@ texture = ExtResource("7_v158k")
 
 [node name="Moustache" parent="Accesories" instance=ExtResource("6_1l0tm")]
 position = Vector2(649, 570)
+price = 80
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Accesories/Moustache"]
@@ -102,7 +105,8 @@ scale = Vector2(0.34375, 0.125)
 texture = ExtResource("7_v158k")
 
 [node name="Bowtie" parent="Accesories" instance=ExtResource("6_1l0tm")]
-position = Vector2(549, 570)
+position = Vector2(748, 570)
+price = 120
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Accesories/Bowtie"]

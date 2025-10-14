@@ -4,6 +4,7 @@ class_name Game
 
 #Rates
 @export var salary = 1
+@export var wormPrice = 40
 
 #Player
 var money
@@ -21,13 +22,18 @@ func _ready() -> void:
 	money = 0
 	isGrabbing = false
 	
-	accesories.append($Accesories/Sunglasses)
+	accesories.resize(AccsTypes.t.Last)
+	
+	accesories[0] = $Accesories/Sunglasses
 	accesories[0].type = AccsTypes.t.Sunglasses
-	accesories.append($Accesories/Hat)
+	
+	accesories[1] = $Accesories/Hat
 	accesories[1].type = AccsTypes.t.Hat
-	accesories.append($Accesories/Moustache)
+	
+	accesories[2] = $Accesories/Moustache
 	accesories[2].type = AccsTypes.t.Moustache
-	accesories.append($Accesories/Bowtie)
+	
+	accesories[3] = $Accesories/Bowtie
 	accesories[3].type = AccsTypes.t.Bowtie
 	
 	for a in accesories:
@@ -72,8 +78,9 @@ func _input(event):
 		if Input.is_action_just_pressed("Click"):
 			for a in accesories:
 				if a.isMouseColliding and not isGrabbing:
-					isGrabbing = true
-					a.grab(get_viewport().get_mouse_position())
+					if money > a.price:
+						isGrabbing = true
+						a.grab(get_viewport().get_mouse_position())
 			
 			for w in wormlings:
 				if w.isMouseColliding and not isGrabbing:
@@ -85,8 +92,9 @@ func _input(event):
 			
 			for w in wormlings:
 				for i in range(accesories.size()):
-					if accesories[i].isGrabbed and w.isMouseColliding:
+					if accesories[i].isGrabbed and w.isMouseColliding and w.accesories[i] == false:
 						w.accesories[i] = true
+						money -= accesories[i].price
 						
 				if w.state == WormState.Movement.GRABBED:
 					w.release()
@@ -96,10 +104,12 @@ func _input(event):
 					a.release()
 
 func _on_button_button_up() -> void:
-	var wormling = WormlingScene.instantiate()
-	add_child(wormling)
-	wormling.position = get_viewport().get_visible_rect().size / 2
-	wormlings.append(wormling)
+	if money > wormPrice:
+		money -= wormPrice
+		var wormling = WormlingScene.instantiate()
+		add_child(wormling)
+		wormling.position = get_viewport().get_visible_rect().size / 2
+		wormlings.append(wormling)
 	
 func isCharacterInsideArea(character: CharacterBody2D, area: Area2D) -> bool:
 	var areaShape = area.get_node("CollisionShape2D").shape
