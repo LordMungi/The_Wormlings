@@ -2,13 +2,18 @@ extends Node
 
 class_name WormState
 
-enum s
+enum Movement
+{
+	STATIONARY,
+	MOVING,
+	GRABBED,
+	DEAD
+}
+
+enum Action 
 {
 	IDLE,
-	WALK,
-	GRABBED,
 	EATING,
 	SLEEPING,
-	WORKING,
-	DEAD
+	WORKING
 }

@@ -20,6 +20,7 @@ position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_2t1p7")
 
 [node name="Timer" type="Timer" parent="."]
+one_shot = true
 
 [node name="Label" type="Label" parent="."]
 offset_left = -62.0

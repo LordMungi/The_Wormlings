@@ -46,21 +46,25 @@ func _process(delta: float) -> void:
 			a.position = get_viewport().get_mouse_position() - a.grabOffset
 	
 	for w in wormlings:
-		if w.state == WormState.s.GRABBED:
+		if w.state == WormState.Movement.GRABBED:
 			w.position = get_viewport().get_mouse_position() - w.grabOffset
-			
-		elif isCharacterInsideArea(w, $Feedlot) and w.fullness < 95:
-			w.state = WormState.s.EATING
-			
-		elif isCharacterInsideArea(w, $Hotel) and w.energy < 95:
-			w.state = WormState.s.SLEEPING
 		
-		elif isCharacterInsideArea(w, $Work) and w.energy > 30:
-			w.state = WormState.s.WORKING
-		
-		if w.state == WormState.s.WORKING:
-			money = min(money + salary * delta, 999)
+		else:
+			if isCharacterInsideArea(w, $Feedlot):
+				w.action = WormState.Action.EATING
 			
+			elif isCharacterInsideArea(w, $Hotel):
+				w.action = WormState.Action.SLEEPING
+			
+			elif isCharacterInsideArea(w, $Work):
+				w.action = WormState.Action.WORKING
+			
+			else:
+				w.action = WormState.Action.IDLE
+		
+		if w.action == WormState.Action.WORKING:
+			money = min(money + salary * delta, 9999)
+	
 	$Label.text = "Money: " + str(int(money))
 
 func _input(event):
@@ -83,10 +87,13 @@ func _input(event):
 				for i in range(accesories.size()):
 					if accesories[i].isGrabbed and w.isMouseColliding:
 						w.accesories[i] = true
-				w.release()
+						
+				if w.state == WormState.Movement.GRABBED:
+					w.release()
 			
 			for a in accesories:
-				a.release()
+				if a.isGrabbed:
+					a.release()
 
 func _on_button_button_up() -> void:
 	var wormling = WormlingScene.instantiate()

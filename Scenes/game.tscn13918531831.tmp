@@ -1,0 +1,113 @@
+[gd_scene load_steps=8 format=3 uid="uid://cfjdc6w3cn7o1"]
+
+[ext_resource type="PackedScene" uid="uid://dbfm8f6n1crna" path="res://Scenes/wall.tscn" id="1_qxrlw"]
+[ext_resource type="Script" uid="uid://du0mwcqin3qdn" path="res://Scripts/game.gd" id="1_wrm1d"]
+[ext_resource type="PackedScene" uid="uid://b1kjupyf3epta" path="res://Scenes/feedlot.tscn" id="3_wrm1d"]
+[ext_resource type="PackedScene" uid="uid://do3ff5mgeqmnr" path="res://Scenes/work.tscn" id="4_wowpa"]
+[ext_resource type="PackedScene" uid="uid://b2g13rvy834xb" path="res://Scenes/hotel.tscn" id="5_i6g32"]
+[ext_resource type="PackedScene" uid="uid://c64bxfprr6ids" path="res://Scenes/accesory.tscn" id="6_1l0tm"]
+[ext_resource type="Texture2D" uid="uid://cd75qcnxa7lqf" path="res://icon.svg" id="7_v158k"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_wrm1d")
+
+[node name="Wall" parent="." instance=ExtResource("1_qxrlw")]
+position = Vector2(583, 682)
+scale = Vector2(10, 1)
+
+[node name="Wall2" parent="." instance=ExtResource("1_qxrlw")]
+position = Vector2(583, 16)
+scale = Vector2(10, 1)
+
+[node name="Wall3" parent="." instance=ExtResource("1_qxrlw")]
+position = Vector2(-1, 372)
+rotation = 1.5708
+scale = Vector2(6, 1)
+
+[node name="Wall4" parent="." instance=ExtResource("1_qxrlw")]
+position = Vector2(1166, 372)
+rotation = 1.5708
+scale = Vector2(6, 1)
+
+[node name="Button" type="Button" parent="."]
+offset_left = 103.0
+offset_top = 556.0
+offset_right = 391.0
+offset_bottom = 593.0
+text = "create instance"
+
+[node name="Feedlot" parent="." instance=ExtResource("3_wrm1d")]
+position = Vector2(140, 151)
+
+[node name="Label" type="Label" parent="Feedlot"]
+offset_left = -62.0
+offset_top = 65.0
+offset_right = 73.0
+offset_bottom = 95.0
+text = "Food"
+
+[node name="Work" parent="." instance=ExtResource("4_wowpa")]
+position = Vector2(1010, 155)
+
+[node name="Label" type="Label" parent="Work"]
+offset_left = -67.0
+offset_top = 67.0
+offset_right = -27.0
+offset_bottom = 90.0
+text = "Work"
+
+[node name="Hotel" parent="." instance=ExtResource("5_i6g32")]
+position = Vector2(566, 155)
+
+[node name="Label" type="Label" parent="Hotel"]
+offset_left = -54.0
+offset_top = 69.0
+offset_right = -12.0
+offset_bottom = 92.0
+text = "Sleep"
+
+[node name="Label" type="Label" parent="."]
+offset_left = 828.0
+offset_top = 537.0
+offset_right = 1082.0
+offset_bottom = 587.0
+
+[node name="Accesories" type="Node" parent="."]
+
+[node name="Sunglasses" parent="Accesories" instance=ExtResource("6_1l0tm")]
+position = Vector2(449, 570)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Accesories/Sunglasses"]
+modulate = Color(0.103744, 0.103744, 0.103744, 1)
+scale = Vector2(0.34375, 0.125)
+texture = ExtResource("7_v158k")
+
+[node name="Hat" parent="Accesories" instance=ExtResource("6_1l0tm")]
+position = Vector2(742, 570)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Accesories/Hat"]
+modulate = Color(0.103744, 0.103744, 0.103744, 1)
+scale = Vector2(0.34375, 0.125)
+texture = ExtResource("7_v158k")
+
+[node name="Moustache" parent="Accesories" instance=ExtResource("6_1l0tm")]
+position = Vector2(649, 570)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Accesories/Moustache"]
+modulate = Color(0.103744, 0.103744, 0.103744, 1)
+scale = Vector2(0.34375, 0.125)
+texture = ExtResource("7_v158k")
+
+[node name="Bowtie" parent="Accesories" instance=ExtResource("6_1l0tm")]
+position = Vector2(549, 570)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Accesories/Bowtie"]
+modulate = Color(0.103744, 0.103744, 0.103744, 1)
+scale = Vector2(0.34375, 0.125)
+texture = ExtResource("7_v158k")
+
+[connection signal="button_up" from="Button" to="." method="_on_button_button_up"]

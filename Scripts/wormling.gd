@@ -16,7 +16,8 @@ var isMouseColliding: bool
 var grabOffset: Vector2
 
 #Status
-var state: WormState.s
+var state: WormState.Movement
+var action: WormState.Action
 var fullness
 var energy
 
@@ -32,6 +33,8 @@ func _ready() -> void:
 	fullness = 100
 	energy = 100
 	
+	state = WormState.Movement.MOVING
+	action = WormState.Action.IDLE
 	changeDirection()
 	
 	accesories.resize(AccsTypes.t.Last)
@@ -39,27 +42,46 @@ func _ready() -> void:
 		accesories[i] = false
 
 func _physics_process(delta):
-	fullness -= hungerSpeed * delta
-	energy -= exhaustionSpeed * delta
+	fullness = max(fullness - hungerSpeed * delta, 0)
+	energy = max(energy - exhaustionSpeed * delta, 0)
 	
 	match state:
-		WormState.s.WALK:
+		WormState.Movement.MOVING:
+			print(str($Timer.time_left) + "  " + str(velocity))
+			if $Timer.time_left == 0:
+				changeDirection()
+			
+			#Move, if it collides, change direction
 			if move_and_collide(velocity):
 				changeDirection()
-		
-		WormState.s.EATING:
-			fullness = min(fullness + eatingSpeed * delta, 100)
-			
-		WormState.s.SLEEPING:
-			energy = min(energy + restingSpeed * delta, 100)
-			fullness -= hungerSpeed * delta
-			
-		
-		WormState.s.WORKING:
-			energy -= exhaustionSpeed * delta
+	
+	if not state == WormState.Movement.GRABBED:
+		match action:
+			WormState.Action.EATING:
+				fullness = min(fullness + eatingSpeed * delta, 100)
+				if fullness > 95:
+					state = WormState.Movement.MOVING
+				else:
+					state = WormState.Movement.STATIONARY
+				
+			WormState.Action.SLEEPING:
+				energy = min(energy + restingSpeed * delta, 100)
+				fullness -= hungerSpeed * delta
+				if energy > 95:
+					state = WormState.Movement.MOVING
+				else:
+					state = WormState.Movement.STATIONARY
+				
+			WormState.Action.WORKING:
+				energy -= exhaustionSpeed * delta
+				if energy < 30:
+					state = WormState.Movement.MOVING
+				else:
+					state = WormState.Movement.STATIONARY
+				
 	
 	if fullness <= 0 or energy <= 0:
-		state = WormState.s.DEAD
+		state = WormState.Movement.DEAD
 		$Sprite2D.modulate = Color(0, 0, 0, 1)
 		$Timer.stop()
 	
@@ -67,7 +89,6 @@ func _physics_process(delta):
 	$Accesories/Hat.visible = accesories[AccsTypes.t.Hat]
 	$Accesories/Moustache.visible = accesories[AccsTypes.t.Moustache]
 	$Accesories/Bowtie.visible = accesories[AccsTypes.t.Bowtie]
-	print(accesories[0])
 	
 	$Label.text = "Hunger " + str(int(fullness))
 	$Label2.text = "Energy " + str(int(energy))
@@ -79,21 +100,17 @@ func _on_mouse_exited() -> void:
 	isMouseColliding = false
 	
 func grab(mousePosition):
-	$Timer.stop()
 	grabOffset = mousePosition - position
-	state = WormState.s.GRABBED
+	state = WormState.Movement.GRABBED
 
 func release():
-	state = WormState.s.IDLE
+	state = WormState.Movement.MOVING
 	changeDirection()
 
 func changeDirection():
 	$Timer.start(rng.randf_range(1, 5))
+	
 	if rng.randi_range(0, 2) == 0:
-		state = WormState.s.IDLE
+		velocity = Vector2(0, 0)
 	else:
-		state = WormState.s.WALK
 		velocity = Vector2(rng.randf_range(-1, 1), rng.randf_range(-1, 1)).normalized() * speed
-
-func _on_timer_timeout() -> void:
-	changeDirection()
