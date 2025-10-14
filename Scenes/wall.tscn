@@ -2,14 +2,13 @@
 
 [ext_resource type="Texture2D" uid="uid://cd75qcnxa7lqf" path="res://icon.svg" id="1_d155t"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_yjehn"]
-size = Vector2(126, 128)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d155t"]
+size = Vector2(126, 126)
 
-[node name="Wall" type="Area2D"]
-metadata/_edit_group_ = true
+[node name="StaticBody2D" type="StaticBody2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_yjehn")
+shape = SubResource("RectangleShape2D_d155t")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_d155t")
