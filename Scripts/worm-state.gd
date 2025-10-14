@@ -7,5 +7,8 @@ enum s
 	IDLE,
 	WALK,
 	GRABBED,
+	EATING,
+	SLEEPING,
+	WORKING,
 	DEAD
 }

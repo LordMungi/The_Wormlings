@@ -4,7 +4,13 @@ var WormlingScene = preload("res://Scenes/wormling.tscn")
 var wormlings = []
 var isGrabbing: bool
 
+var money
+
+@export var salary = 1
+
 func _ready() -> void:
+	money = 0
+	
 	isGrabbing = false
 	for i in range(3):
 		var wormling = WormlingScene.instantiate()
@@ -18,8 +24,19 @@ func _process(delta: float) -> void:
 		if w.state == WormState.s.GRABBED:
 			w.position = get_viewport().get_mouse_position() - w.grabOffset
 			
-		if isCharacterInsideArea(w, $Feedlot):
-			w.fullness = min(w.fullness + w.eatingSpeed * delta, 100)
+		elif isCharacterInsideArea(w, $Feedlot) and w.fullness < 95:
+			w.state = WormState.s.EATING
+			
+		elif isCharacterInsideArea(w, $Hotel) and w.energy < 95:
+			w.state = WormState.s.SLEEPING
+		
+		elif isCharacterInsideArea(w, $Work) and w.energy > 30:
+			w.state = WormState.s.WORKING
+		
+		if w.state == WormState.s.WORKING:
+			money = min(money + salary * delta, 999)
+			
+	$Label.text = "Money: " + str(int(money))
 
 func _input(event):
 	if event is InputEventMouseButton:

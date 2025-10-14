@@ -6,7 +6,9 @@ var rng = RandomNumberGenerator.new()
 
 @export var speed = 2
 @export var hungerSpeed = 0.5
+@export var exhaustionSpeed = 0.5
 @export var eatingSpeed = 2
+@export var restingSpeed = 3
 
 var isMouseColliding: bool
 var isInFeedLot: bool
@@ -15,30 +17,44 @@ var grabOffset: Vector2
 var state: WormState.s
 
 var fullness
+var energy
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	isMouseColliding = false
 	grabOffset = Vector2(0, 0)
 	velocity = Vector2(0, 0)
 	fullness = 100
+	energy = 100
 	changeDirection()
 	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	fullness -= hungerSpeed * delta
+	energy -= exhaustionSpeed * delta
 	
 	match state:
 		WormState.s.WALK:
 			if move_and_collide(velocity):
 				changeDirection()
+		
+		WormState.s.EATING:
+			fullness = min(fullness + eatingSpeed * delta, 100)
+			
+		WormState.s.SLEEPING:
+			energy = min(energy + restingSpeed * delta, 100)
+			fullness -= hungerSpeed * delta
+			
+		
+		WormState.s.WORKING:
+			energy -= exhaustionSpeed * delta
 	
-	if fullness <= 0:
+	
+	if fullness <= 0 or energy <= 0:
 		state = WormState.s.DEAD
 		$Sprite2D.modulate = Color(0, 0, 0, 1)
 		$Timer.stop()
 	
-	$Label.text = str(fullness)
+	$Label.text = "Hunger " + str(int(fullness))
+	$Label2.text = "Energy " + str(int(energy))
 
 func _on_mouse_entered() -> void:
 	isMouseColliding = true
