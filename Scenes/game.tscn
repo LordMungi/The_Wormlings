@@ -33,7 +33,6 @@ offset_bottom = 593.0
 text = "create instance"
 
 [node name="Feedlot" parent="." instance=ExtResource("3_wrm1d")]
-position = Vector2(193, 145)
-scale = Vector2(2, 1)
+position = Vector2(140, 151)
 
 [connection signal="button_up" from="Button" to="." method="_on_button_button_up"]

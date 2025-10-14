@@ -9,6 +9,7 @@ var rng = RandomNumberGenerator.new()
 @export var eatingSpeed = 2
 
 var isMouseColliding: bool
+var isInFeedLot: bool
 var grabOffset: Vector2
 
 var state: WormState.s
@@ -31,9 +32,6 @@ func _physics_process(delta):
 		WormState.s.WALK:
 			if move_and_collide(velocity):
 				changeDirection()
-		
-		WormState.s.EATING:
-			fullness = min(fullness + eatingSpeed * delta, 100)
 	
 	if fullness <= 0:
 		state = WormState.s.DEAD
@@ -49,6 +47,7 @@ func _on_mouse_exited() -> void:
 	isMouseColliding = false
 	
 func grab(mousePosition):
+	$Timer.stop()
 	grabOffset = mousePosition - position
 	state = WormState.s.GRABBED
 

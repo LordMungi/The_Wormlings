@@ -17,6 +17,9 @@ func _process(delta: float) -> void:
 	for w in wormlings:
 		if w.state == WormState.s.GRABBED:
 			w.position = get_viewport().get_mouse_position() - w.grabOffset
+			
+		if isCharacterInsideArea(w, $Feedlot):
+			w.fullness = min(w.fullness + w.eatingSpeed * delta, 100)
 
 func _input(event):
 	if event is InputEventMouseButton:
@@ -36,3 +39,8 @@ func _on_button_button_up() -> void:
 	add_child(wormling)
 	wormling.position = get_viewport().get_visible_rect().size / 2
 	wormlings.append(wormling)
+	
+func isCharacterInsideArea(character: CharacterBody2D, area: Area2D) -> bool:
+	var areaShape = area.get_node("CollisionShape2D").shape
+	var rect = Rect2(area.global_position - areaShape.extents, areaShape.size)
+	return rect.has_point(character.global_position)

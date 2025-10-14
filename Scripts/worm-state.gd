@@ -7,6 +7,5 @@ enum s
 	IDLE,
 	WALK,
 	GRABBED,
-	EATING,
 	DEAD
 }
