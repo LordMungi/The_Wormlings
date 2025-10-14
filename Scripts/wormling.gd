@@ -84,10 +84,10 @@ func _physics_process(delta):
 		$Sprite2D.modulate = Color(0, 0, 0, 1)
 		$Timer.stop()
 	
-	$Accesories/Sunglasses.visible = accesories[AccsTypes.t.Sunglasses]
-	$Accesories/Hat.visible = accesories[AccsTypes.t.Hat]
-	$Accesories/Moustache.visible = accesories[AccsTypes.t.Moustache]
-	$Accesories/Bowtie.visible = accesories[AccsTypes.t.Bowtie]
+	$Body/Sunglasses.visible = accesories[AccsTypes.t.Sunglasses]
+	$Body/Hat.visible = accesories[AccsTypes.t.Hat]
+	$Body/Moustache.visible = accesories[AccsTypes.t.Moustache]
+	$Body/Bowtie.visible = accesories[AccsTypes.t.Bowtie]
 	
 	$Label.text = "Hunger " + str(int(fullness))
 	$Label2.text = "Energy " + str(int(energy))

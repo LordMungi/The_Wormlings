@@ -17,10 +17,19 @@ var wormlings = []
 #Accesories
 var accesories = []
 
+#Market
+var market: Market
+
 
 func _ready() -> void:
 	money = 0
 	isGrabbing = false
+	
+	market = $Market
+	
+	$Buildings/Eatery/Label.text = $Buildings/Eatery.name
+	$Buildings/Hotel/Label.text = $Buildings/Hotel.name
+	$Buildings/Office/Label.text = $Buildings/Office.name
 	
 	accesories.resize(AccsTypes.t.Last)
 	
@@ -56,13 +65,13 @@ func _process(delta: float) -> void:
 			w.position = get_viewport().get_mouse_position() - w.grabOffset
 		
 		else:
-			if isCharacterInsideArea(w, $Feedlot):
+			if isCharacterInsideArea(w, $Buildings/Eatery):
 				w.action = WormState.Action.EATING
 			
-			elif isCharacterInsideArea(w, $Hotel):
+			elif isCharacterInsideArea(w, $Buildings/Hotel):
 				w.action = WormState.Action.SLEEPING
 			
-			elif isCharacterInsideArea(w, $Work):
+			elif isCharacterInsideArea(w, $Buildings/Office):
 				w.action = WormState.Action.WORKING
 			
 			else:
@@ -97,7 +106,16 @@ func _input(event):
 						money -= accesories[i].price
 						
 				if w.state == WormState.Movement.GRABBED:
-					w.release()
+					if isCharacterInsideArea(w, $GameArea):
+						w.release()
+					if isCharacterInsideArea(w, $Market):
+						if market.matchWorm(w):
+							money += market.pay
+							w.queue_free()
+							wormlings.erase(w)
+							market.newOrder()
+				
+				
 			
 			for a in accesories:
 				if a.isGrabbed:

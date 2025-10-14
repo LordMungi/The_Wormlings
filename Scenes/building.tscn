@@ -5,14 +5,19 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s837h"]
 size = Vector2(128, 128)
 
-[node name="Feedlot" type="Area2D"]
+[node name="Building" type="Area2D"]
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_s837h")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(0.697592, 0.397494, 0, 0.415686)
 texture = ExtResource("1_feyp1")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -20.0
+offset_top = 69.0
+offset_right = 20.0
+offset_bottom = 92.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
