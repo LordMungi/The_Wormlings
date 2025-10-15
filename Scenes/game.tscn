@@ -1,12 +1,18 @@
-[gd_scene load_steps=9 format=3 uid="uid://cfjdc6w3cn7o1"]
+[gd_scene load_steps=15 format=3 uid="uid://cfjdc6w3cn7o1"]
 
 [ext_resource type="PackedScene" uid="uid://dbfm8f6n1crna" path="res://Scenes/wall.tscn" id="1_qxrlw"]
 [ext_resource type="Script" uid="uid://du0mwcqin3qdn" path="res://Scripts/game.gd" id="1_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://bi6kqlivpibk2" path="res://Scenes/market.tscn" id="3_i6g32"]
+[ext_resource type="Texture2D" uid="uid://cp0gm3bbg4k3j" path="res://Resources/Sprites/Environment/hotel.png" id="3_rfjv2"]
 [ext_resource type="PackedScene" uid="uid://b1kjupyf3epta" path="res://Scenes/building.tscn" id="3_wrm1d"]
+[ext_resource type="Texture2D" uid="uid://bv576lvqe13dq" path="res://Resources/Sprites/Environment/office.png" id="4_1phco"]
 [ext_resource type="PackedScene" uid="uid://c64bxfprr6ids" path="res://Scenes/accesory.tscn" id="6_1l0tm"]
+[ext_resource type="Texture2D" uid="uid://dr81aitmx1u2d" path="res://Resources/Sprites/Worm/sunglasses.png" id="6_h4fw4"]
 [ext_resource type="PackedScene" uid="uid://col6kb3k7ylaj" path="res://Scenes/food.tscn" id="7_1l0tm"]
+[ext_resource type="Texture2D" uid="uid://o0kola3uu4dm" path="res://Resources/Sprites/Worm/hat.png" id="7_ldgsr"]
 [ext_resource type="PackedScene" uid="uid://nqlfp4kwaq3y" path="res://Scenes/pause_menu.tscn" id="7_v158k"]
+[ext_resource type="Texture2D" uid="uid://d8y80srt4001" path="res://Resources/Sprites/Worm/moustache.png" id="8_o5yvi"]
+[ext_resource type="Texture2D" uid="uid://cl37lje5vtemf" path="res://Resources/Sprites/Worm/bowtie.png" id="9_rku1e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wowpa"]
 size = Vector2(903, 657)
@@ -16,6 +22,7 @@ script = ExtResource("1_wrm1d")
 salary = 1.5
 
 [node name="GameArea" type="Area2D" parent="."]
+visible = false
 position = Vector2(576, 307)
 metadata/_edit_group_ = true
 
@@ -26,37 +33,39 @@ shape = SubResource("RectangleShape2D_wowpa")
 position = Vector2(179, 177)
 
 [node name="Hotel" parent="Buildings" instance=ExtResource("3_wrm1d")]
-modulate = Color(1, 0.132133, 0.319283, 1)
-position = Vector2(404, -104)
+position = Vector2(381, -53)
+scale = Vector2(1, -1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Buildings/Hotel"]
+position = Vector2(2, -6)
+scale = Vector2(0.543665, 0.543665)
+texture = ExtResource("3_rfjv2")
 
 [node name="Office" parent="Buildings" instance=ExtResource("3_wrm1d")]
-modulate = Color(0, 0.743395, 0.743395, 1)
-position = Vector2(406, 399)
-scale = Vector2(1, -1)
+position = Vector2(387, 358)
+
+[node name="Sprite2D" type="Sprite2D" parent="Buildings/Office"]
+scale = Vector2(0.560509, 0.560509)
+texture = ExtResource("4_1phco")
 
 [node name="Walls" type="Node2D" parent="."]
 
 [node name="Wall" parent="Walls" instance=ExtResource("1_qxrlw")]
-modulate = Color(0, 0, 0, 0.341176)
-position = Vector2(580, 711)
-scale = Vector2(13, 1)
+position = Vector2(56, 315)
 
 [node name="Wall2" parent="Walls" instance=ExtResource("1_qxrlw")]
-modulate = Color(0, 0, 0, 0.380392)
-position = Vector2(589, -57)
-scale = Vector2(10, 1)
+position = Vector2(1097, 315)
+scale = Vector2(-1, 1)
 
 [node name="Wall3" parent="Walls" instance=ExtResource("1_qxrlw")]
-modulate = Color(0, 0, 0, 0.321569)
-position = Vector2(61, 303)
-rotation = 1.5708
-scale = Vector2(6, 1)
+position = Vector2(585, 714)
+rotation = 1.57079
+scale = Vector2(-0.874657, 1.59116)
 
 [node name="Wall4" parent="Walls" instance=ExtResource("1_qxrlw")]
-modulate = Color(0, 0, 0, 0.254902)
-position = Vector2(1089, 322)
-rotation = 1.5708
-scale = Vector2(6, 1)
+position = Vector2(585, -65)
+rotation = 1.57079
+scale = Vector2(0.875, 1.591)
 
 [node name="Market" parent="." instance=ExtResource("3_i6g32")]
 position = Vector2(1090, 349)
@@ -71,10 +80,11 @@ text = "worm
 (40)"
 
 [node name="Label" type="Label" parent="."]
-offset_left = 22.0
-offset_top = 14.0
-offset_right = 100.0
-offset_bottom = 113.0
+modulate = Color(0, 0, 0, 1)
+offset_left = 14.0
+offset_top = 15.0
+offset_right = 92.0
+offset_bottom = 114.0
 text = "Money:"
 horizontal_alignment = 1
 
@@ -85,11 +95,21 @@ position = Vector2(60, 131)
 price = 20
 metadata/_edit_group_ = true
 
+[node name="Sprite2D" type="Sprite2D" parent="Accesories/Sunglasses"]
+position = Vector2(-11, 24)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("6_h4fw4")
+
 [node name="Hat" parent="Accesories" instance=ExtResource("6_1l0tm")]
 position = Vector2(65, 247)
 price = 50
 type = 1
 metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Accesories/Hat"]
+position = Vector2(-14, 60)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_ldgsr")
 
 [node name="Moustache" parent="Accesories" instance=ExtResource("6_1l0tm")]
 position = Vector2(67, 374)
@@ -97,18 +117,27 @@ price = 150
 type = 2
 metadata/_edit_group_ = true
 
+[node name="Sprite2D" type="Sprite2D" parent="Accesories/Moustache"]
+position = Vector2(-34, 15)
+scale = Vector2(0.844484, 0.844484)
+texture = ExtResource("8_o5yvi")
+
 [node name="Bowtie" parent="Accesories" instance=ExtResource("6_1l0tm")]
 position = Vector2(65, 489)
 price = 250
 type = 3
 metadata/_edit_group_ = true
 
+[node name="Sprite2D" type="Sprite2D" parent="Accesories/Bowtie"]
+position = Vector2(-30, -21)
+scale = Vector2(0.73776, 0.73776)
+texture = ExtResource("9_rku1e")
+
 [node name="Food" parent="." instance=ExtResource("7_1l0tm")]
-modulate = Color(1, 0.556863, 0.0627451, 1)
 position = Vector2(1090, 68)
-scale = Vector2(0.530809, 0.530809)
 
 [node name="PauseMenu" parent="." instance=ExtResource("7_v158k")]
+visible = false
 z_index = 15
 position = Vector2(581, 305)
 

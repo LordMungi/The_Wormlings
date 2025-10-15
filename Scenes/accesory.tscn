@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://c64bxfprr6ids"]
+[gd_scene load_steps=3 format=3 uid="uid://c64bxfprr6ids"]
 
 [ext_resource type="Script" uid="uid://ca8f2b72svp46" path="res://Scripts/accesory.gd" id="1_fa1wp"]
-[ext_resource type="Texture2D" uid="uid://cd75qcnxa7lqf" path="res://icon.svg" id="2_7c27j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bq5dv"]
 size = Vector2(44, 42)
@@ -13,22 +12,21 @@ script = ExtResource("1_fa1wp")
 shape = SubResource("RectangleShape2D_bq5dv")
 
 [node name="Name" type="Label" parent="."]
-offset_left = -20.0
-offset_top = 19.0
-offset_right = 20.0
-offset_bottom = 42.0
+modulate = Color(0, 0, 0, 1)
+offset_left = -64.0
+offset_top = 22.0
+offset_right = 65.0
+offset_bottom = 45.0
 horizontal_alignment = 1
+justification_flags = 171
 
 [node name="Price" type="Label" parent="."]
+modulate = Color(0, 0, 0, 1)
 offset_left = -20.0
 offset_top = 46.0
 offset_right = 20.0
 offset_bottom = 69.0
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(0.103744, 0.103744, 0.103744, 1)
-scale = Vector2(0.296875, 0.296875)
-texture = ExtResource("2_7c27j")
+horizontal_alignment = 1
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

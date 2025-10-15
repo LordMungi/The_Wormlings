@@ -28,9 +28,6 @@ func _ready() -> void:
 	
 	market = $Market
 	
-	$Buildings/Hotel/Label.text = $Buildings/Hotel.name
-	$Buildings/Office/Label.text = $Buildings/Office.name
-	
 	accesories.resize(AccsTypes.t.Last)
 	accesories[0] = $Accesories/Sunglasses
 	accesories[1] = $Accesories/Hat

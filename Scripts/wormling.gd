@@ -44,12 +44,33 @@ func _ready() -> void:
 		accesories[i] = false
 
 func _physics_process(delta):
+	
+	var isSleeping = state == WormState.Movement.STATIONARY and action == WormState.Action.SLEEPING
+	
+	if velocity.x < 0:
+		$Body.scale.x = abs($Body.scale.x) * -1
+	else:
+		$Body.scale.x = abs($Body.scale.x)
+	
+	if state == WormState.Movement.GRABBED:
+		$Body.animation = "Grab"
+	elif isSleeping:
+		$Body.animation = "Sleep"
+	elif velocity == Vector2(0, 0):
+		$Body.animation = "Idle"
+	else:
+		$Body.animation = "Walk"
+		$Body.play()
+
+	
 	if not Global.isPaused:
 		fullness = max(fullness - hungerSpeed * delta, 0)
 		energy = max(energy - exhaustionSpeed * delta, 0)
 		
 		match state:
 			WormState.Movement.MOVING:
+				$Body.play()
+				
 				if $MoveTimer.time_left == 0:
 					changeDirection()
 				
@@ -82,10 +103,13 @@ func _physics_process(delta):
 		$Body.modulate = Color(0, 0, 0, 1)
 		$MoveTimer.stop()
 	
-	$Body/Sunglasses.visible = accesories[AccsTypes.t.Sunglasses]
-	$Body/Hat.visible = accesories[AccsTypes.t.Hat]
-	$Body/Moustache.visible = accesories[AccsTypes.t.Moustache]
-	$Body/Bowtie.visible = accesories[AccsTypes.t.Bowtie]
+	
+	$Body/Sunglasses.visible = accesories[AccsTypes.t.Sunglasses] and not isSleeping
+	$Body/Hat.visible = accesories[AccsTypes.t.Hat] and not isSleeping
+	$Body/Moustache.visible = accesories[AccsTypes.t.Moustache] and not isSleeping
+	$Body/Bowtie.visible = accesories[AccsTypes.t.Bowtie] and not isSleeping
+	$Body/Tired.visible = energy < 50 and not isSleeping
+	$Body/Hungry.visible = fullness < 50 and not isSleeping
 	
 	$Label.text = "Hunger " + str(int(fullness))
 	$Label2.text = "Energy " + str(int(energy))
