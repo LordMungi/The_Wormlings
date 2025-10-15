@@ -47,8 +47,6 @@ func _physics_process(delta):
 	fullness = max(fullness - hungerSpeed * delta, 0)
 	energy = max(energy - exhaustionSpeed * delta, 0)
 	
-	print(str(state) + " " + str($DeathTimer.time_left))
-	
 	match state:
 		WormState.Movement.MOVING:
 			if $MoveTimer.time_left == 0:
