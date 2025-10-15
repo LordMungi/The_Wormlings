@@ -9,6 +9,7 @@ var resOptions = [
 	Vector2(3840, 2160)
 ]
 
-var resSelection = 2
+var resSelection = 0
 var volumeSelection = 50
 var fullscreenSelection = false
+var isPaused = false

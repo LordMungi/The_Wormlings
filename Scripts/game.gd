@@ -50,36 +50,41 @@ func _ready() -> void:
 		wormlings.append(wormling)
 
 func _process(delta: float) -> void:
+	$PauseMenu.visible = Global.isPaused
 	
-	for a in accesories:
-		if a.isGrabbed:
-			a.position = get_viewport().get_mouse_position() - a.grabOffset
-	
-	if food.isGrabbed:
-		food.position = get_viewport().get_mouse_position() - food.grabOffset
-	
-	for w in wormlings:
-		if w.shouldDespawn:
-			deleteWorm(w)
-			
-		if w.state == WormState.Movement.GRABBED:
-			w.position = get_viewport().get_mouse_position() - w.grabOffset
-		else:
-			if isCharacterInsideArea(w, $Buildings/Hotel):
-				w.action = WormState.Action.SLEEPING
-			
-			elif isCharacterInsideArea(w, $Buildings/Office):
-				w.action = WormState.Action.WORKING
-			
-			else:
-				w.action = WormState.Action.IDLE
+	if not Global.isPaused:
+		for a in accesories:
+			if a.isGrabbed:
+				a.position = get_viewport().get_mouse_position() - a.grabOffset
 		
-		if w.action == WormState.Action.WORKING:
-			money = min(money + salary * delta, 9999)
-	
+		if food.isGrabbed:
+			food.position = get_viewport().get_mouse_position() - food.grabOffset
+		
+		for w in wormlings:
+			if w.shouldDespawn:
+				deleteWorm(w)
+				
+			if w.state == WormState.Movement.GRABBED:
+				w.position = get_viewport().get_mouse_position() - w.grabOffset
+			else:
+				if isCharacterInsideArea(w, $Buildings/Hotel):
+					w.action = WormState.Action.SLEEPING
+				
+				elif isCharacterInsideArea(w, $Buildings/Office):
+					w.action = WormState.Action.WORKING
+				
+				else:
+					w.action = WormState.Action.IDLE
+			
+			if w.action == WormState.Action.WORKING:
+				money = min(money + salary * delta, 9999)
+		
 	$Label.text = "Money: " + str(int(money))
 
 func _input(event):
+	if Input.is_action_just_pressed("Pause"):
+		Global.isPaused = not Global.isPaused
+	
 	if event is InputEventMouseButton:
 		if Input.is_action_just_pressed("Click"):
 			for a in accesories:

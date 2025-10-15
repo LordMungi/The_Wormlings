@@ -44,34 +44,35 @@ func _ready() -> void:
 		accesories[i] = false
 
 func _physics_process(delta):
-	fullness = max(fullness - hungerSpeed * delta, 0)
-	energy = max(energy - exhaustionSpeed * delta, 0)
-	
-	match state:
-		WormState.Movement.MOVING:
-			if $MoveTimer.time_left == 0:
-				changeDirection()
-			
-			#Move, if it collides, change direction
-			if move_and_collide(velocity):
-				changeDirection()
-	
-	if not state == WormState.Movement.GRABBED:
-		match action:
-			WormState.Action.EATING:
-				fullness = min(fullness + eatingSpeed * delta, 100)
-				state = WormState.Movement.MOVING
+	if not Global.isPaused:
+		fullness = max(fullness - hungerSpeed * delta, 0)
+		energy = max(energy - exhaustionSpeed * delta, 0)
+		
+		match state:
+			WormState.Movement.MOVING:
+				if $MoveTimer.time_left == 0:
+					changeDirection()
 				
-			WormState.Action.SLEEPING:
-				energy = min(energy + restingSpeed * delta, 100)
-				if energy > 95:
+				#Move, if it collides, change direction
+				if move_and_collide(velocity):
+					changeDirection()
+		
+		if not state == WormState.Movement.GRABBED:
+			match action:
+				WormState.Action.EATING:
+					fullness = min(fullness + eatingSpeed * delta, 100)
 					state = WormState.Movement.MOVING
-				else:
-					state = WormState.Movement.STATIONARY
-				
-			WormState.Action.WORKING:
-				energy -= exhaustionSpeed * delta
-				state = WormState.Movement.MOVING
+					
+				WormState.Action.SLEEPING:
+					energy = min(energy + restingSpeed * delta, 100)
+					if energy > 95:
+						state = WormState.Movement.MOVING
+					else:
+						state = WormState.Movement.STATIONARY
+					
+				WormState.Action.WORKING:
+					energy -= exhaustionSpeed * delta
+					state = WormState.Movement.MOVING
 				
 	
 	if fullness <= 0 or energy <= 0:

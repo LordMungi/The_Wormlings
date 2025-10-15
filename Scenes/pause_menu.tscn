@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://nqlfp4kwaq3y"]
+
+[ext_resource type="Script" uid="uid://p0fb1yt4gx1d" path="res://Scripts/pause_menu.gd" id="1_emv3i"]
+[ext_resource type="Texture2D" uid="uid://cd75qcnxa7lqf" path="res://icon.svg" id="2_k0w1u"]
+
+[node name="PauseMenu" type="Node2D"]
+script = ExtResource("1_emv3i")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 0.34902)
+scale = Vector2(14.2813, 7.17188)
+texture = ExtResource("2_k0w1u")
+
+[node name="ResumeButton" type="Button" parent="."]
+offset_left = -53.0
+offset_top = -60.0
+offset_right = 48.0
+offset_bottom = -23.0
+text = "Resume"
+
+[node name="QuitButton" type="Button" parent="."]
+offset_left = -53.0
+offset_right = 48.0
+offset_bottom = 37.0
+text = "Quit"
+
+[connection signal="button_up" from="ResumeButton" to="." method="_on_resume_button_button_up"]
+[connection signal="button_up" from="QuitButton" to="." method="_on_quit_button_button_up"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cfjdc6w3cn7o1"]
+[gd_scene load_steps=9 format=3 uid="uid://cfjdc6w3cn7o1"]
 
 [ext_resource type="PackedScene" uid="uid://dbfm8f6n1crna" path="res://Scenes/wall.tscn" id="1_qxrlw"]
 [ext_resource type="Script" uid="uid://du0mwcqin3qdn" path="res://Scripts/game.gd" id="1_wrm1d"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://b1kjupyf3epta" path="res://Scenes/building.tscn" id="3_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://c64bxfprr6ids" path="res://Scenes/accesory.tscn" id="6_1l0tm"]
 [ext_resource type="PackedScene" uid="uid://col6kb3k7ylaj" path="res://Scenes/food.tscn" id="7_1l0tm"]
+[ext_resource type="PackedScene" uid="uid://nqlfp4kwaq3y" path="res://Scenes/pause_menu.tscn" id="7_v158k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wowpa"]
 size = Vector2(903, 657)
@@ -106,5 +107,9 @@ metadata/_edit_group_ = true
 modulate = Color(1, 0.556863, 0.0627451, 1)
 position = Vector2(1090, 68)
 scale = Vector2(0.530809, 0.530809)
+
+[node name="PauseMenu" parent="." instance=ExtResource("7_v158k")]
+z_index = 15
+position = Vector2(581, 305)
 
 [connection signal="button_up" from="Button" to="." method="_on_button_button_up"]
