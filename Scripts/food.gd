@@ -1,10 +1,9 @@
 extends GrabbableObject
 
-class_name Accesory
+class_name Food
 
 @export var price: int
-@export var type: AccsTypes.t
+@export var nutrition: int
 
 func _ready() -> void:
-	$Name.text = name
 	$Price.text = str(price)

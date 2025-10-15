@@ -8,7 +8,7 @@ var pay
 
 var orders = {
 	1: { 
-		"pay": 70,
+		"pay": 30,
 		"accesories": {
 			AccsTypes.t.Sunglasses: true,
 			AccsTypes.t.Hat: false,
@@ -17,7 +17,7 @@ var orders = {
 		}
 	},
 	2: { 
-		"pay": 100,
+		"pay": 60,
 		"accesories": {
 			AccsTypes.t.Sunglasses: false,
 			AccsTypes.t.Hat: true,
@@ -26,7 +26,7 @@ var orders = {
 		}
 	},
 	3: { 
-		"pay": 160,
+		"pay": 100,
 		"accesories": {
 			AccsTypes.t.Sunglasses: true,
 			AccsTypes.t.Hat: false,
@@ -35,7 +35,7 @@ var orders = {
 		}
 	},
 	4: { 
-		"pay": 220,
+		"pay": 150,
 		"accesories": {
 			AccsTypes.t.Sunglasses: false,
 			AccsTypes.t.Hat: true,
@@ -44,7 +44,7 @@ var orders = {
 		}
 	},
 	5: { 
-		"pay": 300,
+		"pay": 200,
 		"accesories": {
 			AccsTypes.t.Sunglasses: false,
 			AccsTypes.t.Hat: true,

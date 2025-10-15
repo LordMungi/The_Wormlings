@@ -3,7 +3,7 @@ extends Node2D
 class_name Game
 
 #Rates
-@export var salary = 1
+@export var salary = 1.0
 @export var wormPrice = 40
 
 #Player
@@ -14,8 +14,9 @@ var isGrabbing: bool
 var WormlingScene = preload("res://Scenes/wormling.tscn")
 var wormlings = []
 
-#Accesories
+#Objects
 var accesories = []
+var food: Food
 
 #Market
 var market: Market
@@ -27,23 +28,17 @@ func _ready() -> void:
 	
 	market = $Market
 	
-	$Buildings/Eatery/Label.text = $Buildings/Eatery.name
 	$Buildings/Hotel/Label.text = $Buildings/Hotel.name
 	$Buildings/Office/Label.text = $Buildings/Office.name
 	
 	accesories.resize(AccsTypes.t.Last)
-	
 	accesories[0] = $Accesories/Sunglasses
-	accesories[0].type = AccsTypes.t.Sunglasses
-	
 	accesories[1] = $Accesories/Hat
-	accesories[1].type = AccsTypes.t.Hat
-	
 	accesories[2] = $Accesories/Moustache
-	accesories[2].type = AccsTypes.t.Moustache
-	
 	accesories[3] = $Accesories/Bowtie
-	accesories[3].type = AccsTypes.t.Bowtie
+	
+	food = $Food
+	food.defaultPos = food.position
 	
 	for a in accesories:
 		a.defaultPos = a.position
@@ -59,16 +54,18 @@ func _process(delta: float) -> void:
 	for a in accesories:
 		if a.isGrabbed:
 			a.position = get_viewport().get_mouse_position() - a.grabOffset
+	print("acc:  " + str(accesories[0].isMouseColliding))
+	
+	if food.isGrabbed:
+		food.position = get_viewport().get_mouse_position() - food.grabOffset
+	print("food: " + str(food.isMouseColliding))
 	
 	for w in wormlings:
 		if w.state == WormState.Movement.GRABBED:
 			w.position = get_viewport().get_mouse_position() - w.grabOffset
 		
 		else:
-			if isCharacterInsideArea(w, $Buildings/Eatery):
-				w.action = WormState.Action.EATING
-			
-			elif isCharacterInsideArea(w, $Buildings/Hotel):
+			if isCharacterInsideArea(w, $Buildings/Hotel):
 				w.action = WormState.Action.SLEEPING
 			
 			elif isCharacterInsideArea(w, $Buildings/Office):
@@ -87,9 +84,14 @@ func _input(event):
 		if Input.is_action_just_pressed("Click"):
 			for a in accesories:
 				if a.isMouseColliding and not isGrabbing:
-					if money > a.price:
+					if money >= a.price:
 						isGrabbing = true
 						a.grab(get_viewport().get_mouse_position())
+			
+			if food.isMouseColliding and not isGrabbing:
+				if money >= food.price:
+					isGrabbing = true
+					food.grab(get_viewport().get_mouse_position())
 			
 			for w in wormlings:
 				if w.isMouseColliding and not isGrabbing:
@@ -103,8 +105,15 @@ func _input(event):
 				for i in range(accesories.size()):
 					if accesories[i].isGrabbed and w.isMouseColliding and w.accesories[i] == false:
 						w.accesories[i] = true
+						accesories[i].release()
 						money -= accesories[i].price
+					
+					if food.isGrabbed and w.isMouseColliding:
+						w.fullness = min(w.fullness + food.nutrition, 100)
+						money -= food.price
+						food.release()
 						
+					
 				if w.state == WormState.Movement.GRABBED:
 					if isCharacterInsideArea(w, $GameArea):
 						w.release()
@@ -114,8 +123,9 @@ func _input(event):
 							w.queue_free()
 							wormlings.erase(w)
 							market.newOrder()
-				
-				
+			
+			if food.isGrabbed:
+				food.release()
 			
 			for a in accesories:
 				if a.isGrabbed:

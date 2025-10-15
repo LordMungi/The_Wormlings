@@ -10,6 +10,7 @@ var rng = RandomNumberGenerator.new()
 @export var exhaustionSpeed = 0.5
 @export var eatingSpeed = 2
 @export var restingSpeed = 3
+@export var fadeSpeed = 0.2
 
 #Grab data
 var isMouseColliding: bool
@@ -47,25 +48,26 @@ func _physics_process(delta):
 	
 	match state:
 		WormState.Movement.MOVING:
-			if $Timer.time_left == 0:
+			if $MoveTimer.time_left == 0:
 				changeDirection()
 			
 			#Move, if it collides, change direction
 			if move_and_collide(velocity):
 				changeDirection()
+		
+		WormState.Movement.DEAD:
+			var color = $Body.modulate
+			color.a = max(color.a - fadeSpeed * delta, 0)  
+			$Body.modulate = color
 	
 	if not state == WormState.Movement.GRABBED:
 		match action:
 			WormState.Action.EATING:
 				fullness = min(fullness + eatingSpeed * delta, 100)
-				if fullness > 95:
-					state = WormState.Movement.MOVING
-				else:
-					state = WormState.Movement.STATIONARY
+				state = WormState.Movement.MOVING
 				
 			WormState.Action.SLEEPING:
 				energy = min(energy + restingSpeed * delta, 100)
-				fullness -= hungerSpeed * delta
 				if energy > 95:
 					state = WormState.Movement.MOVING
 				else:
@@ -73,16 +75,13 @@ func _physics_process(delta):
 				
 			WormState.Action.WORKING:
 				energy -= exhaustionSpeed * delta
-				if energy < 30:
-					state = WormState.Movement.MOVING
-				else:
-					state = WormState.Movement.STATIONARY
+				state = WormState.Movement.MOVING
 				
 	
 	if fullness <= 0 or energy <= 0:
 		state = WormState.Movement.DEAD
-		$Sprite2D.modulate = Color(0, 0, 0, 1)
-		$Timer.stop()
+		$Body.modulate = Color(0, 0, 0, 1)
+		$MoveTimer.stop()
 	
 	$Body/Sunglasses.visible = accesories[AccsTypes.t.Sunglasses]
 	$Body/Hat.visible = accesories[AccsTypes.t.Hat]
@@ -107,7 +106,7 @@ func release():
 	changeDirection()
 
 func changeDirection():
-	$Timer.start(rng.randf_range(1, 5))
+	$MoveTimer.start(rng.randf_range(1, 5))
 	
 	if rng.randi_range(0, 2) == 0:
 		velocity = Vector2(0, 0)

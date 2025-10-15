@@ -23,7 +23,7 @@ offset_bottom = 87.0
 text = "Market"
 
 [node name="Worm" type="Sprite2D" parent="."]
-position = Vector2(1, -133)
+position = Vector2(-3.05176e-05, -126)
 scale = Vector2(0.627993, 0.627993)
 texture = ExtResource("2_4rre6")
 metadata/_edit_group_ = true
