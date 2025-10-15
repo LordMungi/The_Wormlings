@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://4c7hu7g74knh"]
+
+[ext_resource type="FontFile" uid="uid://c1y6gtgesv1h1" path="res://Resources/Fonts/Chalk-Regular.ttf" id="1_okuee"]
+
+[resource]
+default_font = ExtResource("1_okuee")
+default_font_size = 28

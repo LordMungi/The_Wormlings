@@ -10,6 +10,6 @@ var resOptions = [
 ]
 
 var resSelection = 0
-var volumeSelection = 50
+var volumeSelection = 0.5
 var fullscreenSelection = false
 var isPaused = false

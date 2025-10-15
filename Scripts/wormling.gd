@@ -54,6 +54,8 @@ func _physics_process(delta):
 	
 	if state == WormState.Movement.GRABBED:
 		$Body.animation = "Grab"
+	elif state == WormState.Movement.DEAD:
+		$Body.animation = "Sleep"
 	elif isSleeping:
 		$Body.animation = "Sleep"
 	elif velocity == Vector2(0, 0):

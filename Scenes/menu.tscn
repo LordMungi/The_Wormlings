@@ -1,27 +1,42 @@
-[gd_scene load_steps=3 format=3 uid="uid://dkehqjjgmijgs"]
+[gd_scene load_steps=6 format=3 uid="uid://dkehqjjgmijgs"]
 
 [ext_resource type="Script" uid="uid://caas2otfmciae" path="res://Scripts/menu.gd" id="1_1rerr"]
+[ext_resource type="FontFile" uid="uid://c1y6gtgesv1h1" path="res://Resources/Fonts/Chalk-Regular.ttf" id="2_cayip"]
+[ext_resource type="Texture2D" uid="uid://db72hdbcf6slv" path="res://Resources/Sprites/title.png" id="2_xhh6f"]
+[ext_resource type="Theme" uid="uid://4c7hu7g74knh" path="res://Resources/Fonts/menu.tres" id="3_158mb"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_1rerr"]
-font_size = 50
+[sub_resource type="LabelSettings" id="LabelSettings_158mb"]
+font = ExtResource("2_cayip")
+font_color = Color(0, 0, 0, 0.992157)
 
 [node name="Menu" type="Node2D"]
 script = ExtResource("1_1rerr")
 
+[node name="Label" type="Label" parent="."]
+offset_left = 17.0
+offset_top = 603.0
+offset_right = 130.0
+offset_bottom = 632.0
+text = "By LordMungi
+Music by Rexplo"
+label_settings = SubResource("LabelSettings_158mb")
+
 [node name="Buttons" type="Node" parent="."]
 
 [node name="PlayButton" type="Button" parent="Buttons"]
-offset_left = 438.0
+offset_left = 439.0
 offset_top = 410.0
-offset_right = 707.0
+offset_right = 708.0
 offset_bottom = 446.0
+theme = ExtResource("3_158mb")
 text = "Play"
 
 [node name="SettingsButton" type="Button" parent="Buttons"]
-offset_left = 438.0
+offset_left = 440.0
 offset_top = 462.0
-offset_right = 707.0
+offset_right = 709.0
 offset_bottom = 498.0
+theme = ExtResource("3_158mb")
 text = "Settings"
 
 [node name="QuitButton" type="Button" parent="Buttons"]
@@ -29,16 +44,13 @@ offset_left = 438.0
 offset_top = 514.0
 offset_right = 707.0
 offset_bottom = 550.0
+theme = ExtResource("3_158mb")
 text = "Quit"
 
-[node name="Label" type="Label" parent="."]
-offset_left = 397.0
-offset_top = 183.0
-offset_right = 758.0
-offset_bottom = 252.0
-text = "The Wormlings"
-label_settings = SubResource("LabelSettings_1rerr")
-horizontal_alignment = 1
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(571, 256)
+scale = Vector2(0.356615, 0.356615)
+texture = ExtResource("2_xhh6f")
 
 [connection signal="ready" from="." to="." method="_on_ready"]
 [connection signal="button_up" from="Buttons/PlayButton" to="." method="_on_play_button_button_up"]

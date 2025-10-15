@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://cfjdc6w3cn7o1"]
+[gd_scene load_steps=17 format=3 uid="uid://cfjdc6w3cn7o1"]
 
 [ext_resource type="PackedScene" uid="uid://dbfm8f6n1crna" path="res://Scenes/wall.tscn" id="1_qxrlw"]
 [ext_resource type="Script" uid="uid://du0mwcqin3qdn" path="res://Scripts/game.gd" id="1_wrm1d"]
+[ext_resource type="Texture2D" uid="uid://cle3sb4uuyr78" path="res://Resources/Sprites/Environment/wall.png" id="2_1phco"]
 [ext_resource type="PackedScene" uid="uid://bi6kqlivpibk2" path="res://Scenes/market.tscn" id="3_i6g32"]
 [ext_resource type="Texture2D" uid="uid://cp0gm3bbg4k3j" path="res://Resources/Sprites/Environment/hotel.png" id="3_rfjv2"]
 [ext_resource type="PackedScene" uid="uid://b1kjupyf3epta" path="res://Scenes/building.tscn" id="3_wrm1d"]
@@ -13,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://nqlfp4kwaq3y" path="res://Scenes/pause_menu.tscn" id="7_v158k"]
 [ext_resource type="Texture2D" uid="uid://d8y80srt4001" path="res://Resources/Sprites/Worm/moustache.png" id="8_o5yvi"]
 [ext_resource type="Texture2D" uid="uid://cl37lje5vtemf" path="res://Resources/Sprites/Worm/bowtie.png" id="9_rku1e"]
+[ext_resource type="AudioStream" uid="uid://fwpi1c0peooj" path="res://Resources/Music/bgm.mp3" id="15_nb51f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wowpa"]
 size = Vector2(903, 657)
@@ -22,12 +24,17 @@ script = ExtResource("1_wrm1d")
 salary = 1.5
 
 [node name="GameArea" type="Area2D" parent="."]
-visible = false
 position = Vector2(576, 307)
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GameArea"]
 shape = SubResource("RectangleShape2D_wowpa")
+
+[node name="Sprite2D" type="Sprite2D" parent="GameArea"]
+modulate = Color(0.809223, 0.481364, 0.557691, 1)
+position = Vector2(131, 7)
+scale = Vector2(3.20131, 0.43867)
+texture = ExtResource("2_1phco")
 
 [node name="Buildings" type="Node2D" parent="."]
 position = Vector2(179, 177)
@@ -140,5 +147,10 @@ position = Vector2(1090, 68)
 visible = false
 z_index = 15
 position = Vector2(581, 305)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(438, 410)
+stream = ExtResource("15_nb51f")
+autoplay = true
 
 [connection signal="button_up" from="Button" to="." method="_on_button_button_up"]
