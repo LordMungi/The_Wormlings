@@ -17,6 +17,7 @@ var isMouseColliding: bool
 var grabOffset: Vector2
 
 #Status
+var shouldDespawn: bool
 var state: WormState.Movement
 var action: WormState.Action
 var fullness
@@ -46,6 +47,8 @@ func _physics_process(delta):
 	fullness = max(fullness - hungerSpeed * delta, 0)
 	energy = max(energy - exhaustionSpeed * delta, 0)
 	
+	print(str(state) + " " + str($DeathTimer.time_left))
+	
 	match state:
 		WormState.Movement.MOVING:
 			if $MoveTimer.time_left == 0:
@@ -54,11 +57,6 @@ func _physics_process(delta):
 			#Move, if it collides, change direction
 			if move_and_collide(velocity):
 				changeDirection()
-		
-		WormState.Movement.DEAD:
-			var color = $Body.modulate
-			color.a = max(color.a - fadeSpeed * delta, 0)  
-			$Body.modulate = color
 	
 	if not state == WormState.Movement.GRABBED:
 		match action:
@@ -79,6 +77,8 @@ func _physics_process(delta):
 				
 	
 	if fullness <= 0 or energy <= 0:
+		if $DeathTimer.time_left == 0:
+			$DeathTimer.start()
 		state = WormState.Movement.DEAD
 		$Body.modulate = Color(0, 0, 0, 1)
 		$MoveTimer.stop()
@@ -112,3 +112,7 @@ func changeDirection():
 		velocity = Vector2(0, 0)
 	else:
 		velocity = Vector2(rng.randf_range(-1, 1), rng.randf_range(-1, 1)).normalized() * speed
+
+
+func _on_death_timer_timeout() -> void:
+	shouldDespawn = true

@@ -7,7 +7,7 @@ enum Movement
 	STATIONARY,
 	MOVING,
 	GRABBED,
-	DEAD
+	DEAD,
 }
 
 enum Action 
@@ -15,5 +15,5 @@ enum Action
 	IDLE,
 	EATING,
 	SLEEPING,
-	WORKING
+	WORKING,
 }

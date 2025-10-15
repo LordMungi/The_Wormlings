@@ -54,16 +54,16 @@ func _process(delta: float) -> void:
 	for a in accesories:
 		if a.isGrabbed:
 			a.position = get_viewport().get_mouse_position() - a.grabOffset
-	print("acc:  " + str(accesories[0].isMouseColliding))
 	
 	if food.isGrabbed:
 		food.position = get_viewport().get_mouse_position() - food.grabOffset
-	print("food: " + str(food.isMouseColliding))
 	
 	for w in wormlings:
+		if w.shouldDespawn:
+			deleteWorm(w)
+			
 		if w.state == WormState.Movement.GRABBED:
 			w.position = get_viewport().get_mouse_position() - w.grabOffset
-		
 		else:
 			if isCharacterInsideArea(w, $Buildings/Hotel):
 				w.action = WormState.Action.SLEEPING
@@ -120,8 +120,7 @@ func _input(event):
 					if isCharacterInsideArea(w, $Market):
 						if market.matchWorm(w):
 							money += market.pay
-							w.queue_free()
-							wormlings.erase(w)
+							deleteWorm(w)
 							market.newOrder()
 			
 			if food.isGrabbed:
@@ -143,3 +142,7 @@ func isCharacterInsideArea(character: CharacterBody2D, area: Area2D) -> bool:
 	var areaShape = area.get_node("CollisionShape2D").shape
 	var rect = Rect2(area.global_position - areaShape.extents, areaShape.size)
 	return rect.has_point(character.global_position)
+	
+func deleteWorm(worm):
+	worm.queue_free()
+	wormlings.erase(worm)
